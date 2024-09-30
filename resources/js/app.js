@@ -1,11 +1,14 @@
 import './bootstrap';
 import '../css/app.css';
+import 'primeicons/primeicons.css';
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
 import { definePreset } from '@primevue/themes';
 import {ZiggyVue} from '../../vendor/tightenco/ziggy'
+import ToastService from 'primevue/toastservice';
+
 
 const MyPreset = definePreset(Aura, {
     primitive: {
@@ -50,6 +53,7 @@ createInertiaApp({
     createApp({ render: () => h(App, props) })
       .use(plugin)
       .use(ZiggyVue)
+      .use(ToastService)
       .use(PrimeVue, {
         theme: {
             preset: MyPreset,
