@@ -6,32 +6,43 @@ import axios from 'axios'
 
 const Signup = () => {
 
-    const [email, setEmail] = useState();
-    const [name, setName] = useState();
-    const [password, setPassword] = useState();
-    const [confirmPassword, setConfirmPassword] = useState();
+    const [email, setEmail] = useState('');
+    const [fullName, setFullname] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3001/signup', {email, name, password, confirmPassword})
-            .then(result => {
-                console.log(result)
-                navigate('/')
-            })
-            .catch(err => console.log(err))
+        setError(''); 
+        try {
+            const result = await axios.post('http://localhost:8000/api/signup', {email, fullName, password, confirmPassword});
+            console.log(result);
+            setEmail('');
+            setFullname('');
+            setPassword('');
+            setConfirmPassword('');
+            navigate('/')
+        } catch (error) {
+            console.error(error);
+                setError(error.response?.data?.message || "An error occurred");
+                setPassword('');
+                setConfirmPassword('');
+        }
     }
     
     return (
         <div className='h-screen flex items-center justify-center'>
             <div className='w-auto border-solid border-2 border-black rounded-md p-8 flex flex-col items-center justify-center'>
-                <h1 className='text-5xl'>SIGNUP</h1>
+                <h1 className='text-5xl mb-4'>SIGNUP</h1>
+                {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
                 <div className='mt-6'>
                     <form onSubmit={handleSubmit}>
-                        <InputText onChange={(e) => setEmail(e.target.value)} type='email' label='Email' />
-                        <InputText onChange={(e) => setName(e.taget.value)} type='text' label='Full Name' />
-                        <InputText onChange={(e) => setPassword(e.target.value)} type='password' label='Password' />
-                        <InputText onChange={(e) => setConfirmPassword(e.target.value)} type='password' label='Confirm Password' />
+                        <InputText onChange={(e) => setEmail(e.target.value)} type='email' label='Email' value={email} />
+                        <InputText onChange={(e) => setFullname(e.target.value)} type='text' label='Full Name' value={fullName} />
+                        <InputText onChange={(e) => setPassword(e.target.value)} type='password' label='Password' value={password} />
+                        <InputText onChange={(e) => setConfirmPassword(e.target.value)} type='password' label='Confirm Password' value={confirmPassword} />
                         <CommonButton type='submit' label='Signup' />
                     </form>
                 </div>
