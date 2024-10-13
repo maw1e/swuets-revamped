@@ -1,37 +1,33 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const UserModel = require('./models/UserModel');
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import route from "./routes/signupRoute.js";
+
 
 const app = express();
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(cors());
+dotenv.config();
 
-mongoose.connect('mongodb://localhost:27017/swuets-db');
+const PORT = process.env.PORT || 7000;
+const MONGOURL = process.env.MONGO_URL;
 
-app.post('/signup', (req, res) => {
-    UserModel.create(req.body)
-        .then(users => res.json(users))
-        .catch(err => res.json(err))
-})
+mongoose
+    .connect(MONGOURL)
+    .then(() => {
+        console.log("DB Connected Successfully!");
+        app.listen(PORT, () => {
+            console.log(`SERVER IS RUNNING ON PORT: ${PORT}`  )
+        });
+    })
+    .catch((error) => {
+        console.log(error);
+    })
 
-app.post('/', (req, res) => {
-    const {email, password} = req.body;
+    
 
-    UserModel.findOne({email: email})
-        .then(user => {
-            if(user) {
-                if(user.password === password) {
-                    res.json("Success")
-                } else {
-                    res.json('The password is incorrect')
-                }
-            } else {
-                res.json('No record existed')
-            }
-        })
-});
+app.use('/api', route);
 
-app.listen(3001, () => {
-    console.log("Server is running")
-});
+
