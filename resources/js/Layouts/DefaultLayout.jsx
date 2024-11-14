@@ -1,11 +1,17 @@
 import React from 'react'
 
-const DefaultLayout = () => {
-  return (
-    <div>
-      
-    </div>
-  )
+const DefaultLayout = ({children}) => {
+    return (
+      <>
+        <div>
+
+        </div>
+
+        <main>
+          {children}
+      </main>
+      </>
+    )
 }
 
 export default DefaultLayout

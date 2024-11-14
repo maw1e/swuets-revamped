@@ -34,6 +34,6 @@ const Login = () => {
     )
 }
 
-Login.layout = <DefaultLayout />
+Login.layout = (page) => <DefaultLayout>{page}</DefaultLayout>
 
 export default Login

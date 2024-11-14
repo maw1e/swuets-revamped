@@ -1,11 +1,11 @@
 import React from 'react'
-import Navbar from '../Components/Navbar'
+import GuestNavbar from '../Components/GuestNavbar'
 
-const Layout = ({children}) => {
+const GuestLayout = ({children}) => {
     return (
         <>
             <header>
-                <Navbar />
+                <GuestNavbar />
             </header>
 
             <main>
@@ -15,4 +15,4 @@ const Layout = ({children}) => {
     )
 }
 
-export default Layout
+export default GuestLayout
