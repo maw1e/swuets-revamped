@@ -115,7 +115,7 @@ const MiniDrawer = () => {
 
     const logout = (e) => {
       e.preventDefault();
-      router.post('/logout', {}, {
+      router.post('logout', {}, {
           onSuccess: () => console.log('Logout successful'),
           onError: (errors) => console.error('Logout error:', errors),
       });

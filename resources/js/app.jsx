@@ -6,7 +6,10 @@ import { createRoot } from 'react-dom/client'
 import GuestLayout from './Layouts/GuestLayout';
 import { ThemeProvider, CssBaseline } from '@mui/material'; 
 import theme from './theme'
-// import {ZiggyReact} from '../../vendor/tightenco/ziggy'
+// import { Ziggy } from './ziggy'
+// import { route } from 'ziggy-js';
+
+// window.route = (name, params, absolute) => route(name, params, absolute, Ziggy);
 
 createInertiaApp({
   resolve: name => {

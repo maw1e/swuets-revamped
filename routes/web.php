@@ -11,7 +11,7 @@ Route::middleware(['auth'])->group(function() {
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
 
     // Logout route
-    Route::post('/logout', [LogoutController::class, 'logout']);
+    Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
 
