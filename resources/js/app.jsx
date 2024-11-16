@@ -6,6 +6,7 @@ import { createRoot } from 'react-dom/client'
 import GuestLayout from './Layouts/GuestLayout';
 import { ThemeProvider, CssBaseline } from '@mui/material'; 
 import theme from './theme'
+// import {ZiggyReact} from '../../vendor/tightenco/ziggy'
 
 createInertiaApp({
   resolve: name => {

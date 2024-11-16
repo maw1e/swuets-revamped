@@ -18,6 +18,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { Button } from '@mui/material';
+import { router } from '@inertiajs/react';
 
 const drawerWidth = 240;
 
@@ -110,6 +112,15 @@ const MiniDrawer = () => {
     const handleDrawerClose = () => {
       setOpen(false);
     };
+
+    const logout = (e) => {
+      e.preventDefault();
+      router.post('/logout', {}, {
+          onSuccess: () => console.log('Logout successful'),
+          onError: (errors) => console.error('Logout error:', errors),
+      });
+    };
+  
   
     return (
       <Box sx={{ display: 'flex' }}>
@@ -130,9 +141,10 @@ const MiniDrawer = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
+            <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
               SWUETS
             </Typography>
+            <Button sx={{color: 'white'}} onClick={logout}>Logout</Button>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

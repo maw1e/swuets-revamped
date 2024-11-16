@@ -1,7 +1,7 @@
 import React from 'react'
 import MiniDrawer from './MiniDrawer'
-import { Link } from '@inertiajs/react'
 import { Button } from '@mui/material'
+
 
 
 const AuthenticatedNavbar = ({children}) => {
@@ -9,9 +9,9 @@ const AuthenticatedNavbar = ({children}) => {
         <>
             <div>
                 <header>
-                    <nav className="bg-white p-4 flex justify-between items-center border-b border-slate-300 shadow-lg pl-16 pr-16 fixed top-0 left-0 w-full">
+                    <nav>
                         <MiniDrawer />
-                    </nav>
+                    </nav> 
                 </header>
             </div>
 
