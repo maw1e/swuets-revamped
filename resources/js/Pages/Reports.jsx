@@ -8,6 +8,7 @@ const Reports = () => {
             <AppLayout title='Reports'>
                 <div>
                     <h1>REPORTS</h1>
+                    <h2>THIS IS FOR TEST COMMIT AND PUSH!</h2>
                 </div>
             </AppLayout>
         </>
