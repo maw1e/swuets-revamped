@@ -8,7 +8,20 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth'])->group(function() {
+    //Dashboard routes
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
+
+    //Event Management routes
+    Route::inertia('/event_management', 'EventManagement')->name('event_management');
+
+    // Users Management routes
+    Route::inertia('/user_management', 'UserManagement')->name('user_management');
+
+    // Reports route
+    Route::inertia('/reports', 'Reports')->name('reports');
+
+    // Event History
+    Route::inertia('/event_history', 'EventHistory')->name('event_history');
 
     // Logout route
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');

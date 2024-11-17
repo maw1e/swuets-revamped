@@ -3,7 +3,7 @@ import AuthenticatedLayout from '../Layouts/AuthenticatedLayout'
 
 const Dashboard = () => {
     return (
-        <div className='flex items-center justify-center h-screen'>
+        <div>
             <h1>DASHBOARD</h1>
         </div>
     )

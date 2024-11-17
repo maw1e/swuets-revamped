@@ -14,10 +14,25 @@ const Home = () => {
             <h1 className="text-7xl font-bold mb-4">WELCOME TO SWUETS</h1>
             <p className="text-lg md:text-xl mb-8">Discover amazing features and experiences tailored just for you.</p>
             <div>
-              <Link href={route('login')}><Button variant="contained" size='large' sx={{ marginLeft: '16px'}}>Login</Button></Link>
-              <Link href={route('login')}><Button variant="outlined" size='large' sx={{ marginLeft: '16px'}}>Signup</Button></Link>
+              <Button
+                component={Link}
+                href={route('login')}
+                variant="contained"
+                size='large'
+                sx={{ marginLeft: '16px'}}
+              >
+                Login
+              </Button>
+              <Button
+                component={Link}
+                href={route('login')}
+                variant="outlined"
+                size='large'
+                sx={{ marginLeft: '16px'}}
+              >
+                Signup
+              </Button>
             </div>
-            
           </div>
         </section>
       </AppLayout>
