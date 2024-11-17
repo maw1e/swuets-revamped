@@ -1,11 +1,16 @@
 import React from 'react'
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout'
+import AppLayout from '../Layouts/AppLayout'
 
 const EventHistory = () => {
     return (
-        <div>
-            <h1>EVENT HISTORY</h1>
-        </div>
+        <>
+            <AppLayout title='Event History'>
+                <div>
+                    <h1>Event History</h1>
+                </div>
+            </AppLayout>
+        </>
     )
 }
 

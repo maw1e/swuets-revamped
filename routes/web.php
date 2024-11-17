@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\SignupController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,6 +17,8 @@ Route::middleware(['auth'])->group(function() {
 
     // Users Management routes
     Route::inertia('/user_management', 'UserManagement')->name('user_management');
+    Route::get('/user_management', [UserController::class, 'index'])->name('user_management');
+    Route::post('/user_management', [UserController::class, 'createUser'])->name('user.create');
 
     // Reports route
     Route::inertia('/reports', 'Reports')->name('reports');

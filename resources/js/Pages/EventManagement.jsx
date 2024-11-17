@@ -1,11 +1,16 @@
 import React from 'react'
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout'
+import AppLayout from '../Layouts/AppLayout'
 
 const EventManagement = () => {
     return (
-        <div>
-            <h1>EVENT MANAGEMENT</h1>
-        </div>
+        <>
+            <AppLayout title='Event Management'>
+                <div>
+                    <h1>Event Management</h1>
+                </div>
+            </AppLayout>
+        </>
     )
 }
 

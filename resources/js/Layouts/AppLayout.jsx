@@ -11,7 +11,7 @@ const AppLayout = ({title='Default Title', children}) => {
                 <meta name="author" content="Your Name or Company" />
             </Head>
 
-            <main>
+            <main className='pl-16 pr-16 pt-8'>
                 {children}
             </main>
         </>

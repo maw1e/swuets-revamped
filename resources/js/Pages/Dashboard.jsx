@@ -1,11 +1,16 @@
 import React from 'react'
 import AuthenticatedLayout from '../Layouts/AuthenticatedLayout'
+import AppLayout from '../Layouts/AppLayout'
 
 const Dashboard = () => {
     return (
-        <div>
-            <h1>DASHBOARD</h1>
-        </div>
+        <>
+            <AppLayout title='Dashboard'>
+                <div>
+                    <h1>DASHBOARD</h1>
+                </div>
+            </AppLayout>
+        </>
     )
 }
 
