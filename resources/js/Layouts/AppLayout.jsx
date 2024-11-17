@@ -1,0 +1,21 @@
+import { Head } from '@inertiajs/react'
+import React from 'react'
+
+const AppLayout = ({title='Default Title', children}) => {
+    return (
+        <>
+            <Head>
+                <title>{title}</title>
+                <meta name="description" content="Default description for the website." />
+                <meta name="keywords" content="default, keywords, for, site" />
+                <meta name="author" content="Your Name or Company" />
+            </Head>
+
+            <main>
+                {children}
+            </main>
+        </>
+    )
+}
+
+export default AppLayout

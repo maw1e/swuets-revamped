@@ -19,7 +19,8 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Button } from '@mui/material';
-import { router } from '@inertiajs/react';
+import { useForm } from '@inertiajs/react';
+import { useRoute } from 'ziggy-js';
 
 const drawerWidth = 240;
 
@@ -102,6 +103,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const MiniDrawer = () => {
+    const route = useRoute();
+    const {post} = useForm();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
   
@@ -115,10 +118,10 @@ const MiniDrawer = () => {
 
     const logout = (e) => {
       e.preventDefault();
-      router.post('logout', {}, {
+      post(route('logout', {}, {
           onSuccess: () => console.log('Logout successful'),
           onError: (errors) => console.error('Logout error:', errors),
-      });
+      }));
     };
   
   

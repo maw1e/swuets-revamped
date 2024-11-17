@@ -18,15 +18,15 @@ Route::middleware(['auth'])->group(function() {
 
 Route::middleware(['guest'])->group(function() {
     // Home route
-    Route::inertia('/', 'Home');
+    Route::inertia('/', 'Home')->name('home');
 
     // Login routes
     Route::inertia('/login', 'Auth/Login')->name('login');
-    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/login', [LoginController::class, 'login'])->name('login.attempt');
 
     // Signup routes
-    Route::inertia('/signup', 'Auth/Signup');
-    Route::post('/signup', [SignupController::class, 'signup']);
+    Route::inertia('/signup', 'Auth/Signup')->name('signup');
+    Route::post('/signup', [SignupController::class, 'signup'])->name('signup.attempt');
 
     
 });
