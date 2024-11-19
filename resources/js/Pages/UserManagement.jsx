@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import AuthenticatedLayout from '../Layouts/AuthenticatedLayout'
-import AppLayout from '../Layouts/AppLayout'
+import React, { useEffect, useState } from 'react';
+import AuthenticatedLayout from '../Layouts/AuthenticatedLayout';
+import AppLayout from '../Layouts/AppLayout';
 
 import { 
     Button, 
@@ -22,7 +22,8 @@ import {
     TableRow,
     Paper,
     Tooltip,
-} from '@mui/material'
+    DialogContentText,
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -62,13 +63,44 @@ const UserManagement = () => {
     const route = useRoute();
     const { props } = usePage();
     const [open, setOpen] = useState(false);
+    const [deleteOpen, setDeleteOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
     const [snackBarMessage, setSnackBarMessage] = useState('');
+    const [editingUser, setEditingUser] = useState(null);
 
-    const handleClickOpen = () => setOpen(true); 
-    const handleClose = () => setOpen(false);
+    const openDeleteDialog = () => {
+        setDeleteOpen(true);
+    }
 
-    console.log(props)
+    const closeDeleteDialog = () => {
+        setDeleteOpen(false);
+    }
+
+    const handleClickOpen = (user = null) => {
+        setOpen(true);
+        setEditingUser(user);
+        if (user) {
+            // Populate form with user data when editing
+            setData({
+                name: user.name,
+                email: user.email,
+            });
+        } else {
+            // Reset form data when adding a new user
+            setData({
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: '',
+            });
+        }
+    }; 
+    const handleClose = () => {
+        setOpen(false);
+        setEditingUser(null);
+    };
+
+    const message = props.flash.success;
 
     useEffect(() => {
         if (props.flash.success) {
@@ -86,7 +118,7 @@ const UserManagement = () => {
           setAlertOpen(false);
     };
     
-    const {data, setData, post, reset, errors} = useForm({
+    const {data, setData, post, reset, delete: destroy, put, errors} = useForm({
         name: '',
         email: '',
         password: '',
@@ -95,20 +127,52 @@ const UserManagement = () => {
 
     const submit = (e) => {
         e.preventDefault();
-        post(route('user.create'), {
+
+        if(editingUser) {
+            put(route('user.update', editingUser.id), {
+                method: 'put',
+                data,
+                onSuccess: () => {
+                    reset();
+                    setEditingUser(null);
+                    setSnackBarMessage(message);
+                    setAlertOpen(true);
+                    setOpen(false);
+                },
+                onError: (errors) => {
+                    console.log('Error: ', errors);
+                },
+            });
+        } else {
+            post(route('user.create'), {
+                onSuccess: () => {
+                    reset(); 
+                    setAlertOpen(true);
+                    setOpen(false);
+                    setSnackBarMessage(message);
+                },
+                onError: (errors) => {
+                    reset('password', 'password_confirmation');
+                    console.log('Error: ', errors)
+                }
+            });
+        }
+        
+    };
+
+    const deleteUser = (id) => {
+        destroy(route('user.delete', id), {
+            method: 'delete',
             onSuccess: () => {
-                const message = props.flash.success;
-                reset(); 
-                setAlertOpen(true);
-                setOpen(false);
                 setSnackBarMessage(message);
+                setDeleteOpen(false);
             },
             onError: (errors) => {
-                reset('password', 'password_confirmation');
-                console.log('Error: ', errors)
+                console.log(errors);
             }
-        })
-    }
+
+        });
+    };
 
 
     return (
@@ -117,7 +181,7 @@ const UserManagement = () => {
                 
                 <div className="flex justify-between items-center mb-4">
                     <h1 className='text-5xl font-bold mb-4'>USER MANAGEMENT</h1>
-                    <Button variant='contained' onClick={handleClickOpen}>Add User</Button>
+                    <Button variant='contained' onClick={() => handleClickOpen()}>Add User</Button>
                     <Snackbar 
                         open={alertOpen} 
                         autoHideDuration={3000} 
@@ -134,12 +198,13 @@ const UserManagement = () => {
                         </Alert>
                     </Snackbar>
                     <BootstrapDialog
+                        key={open}
                         onClose={handleClose}
                         aria-labelledby="customized-dialog-title"
                         open={open}
                     >
                         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-                        Add New User
+                        {editingUser ? 'Edit User' : 'Add New User'}
                         </DialogTitle>
                         <IconButton
                         aria-label="close"
@@ -160,13 +225,17 @@ const UserManagement = () => {
                                     {errors.name && <span><p className='text-red-500'>{errors.name}</p></span>}
                                     <TextField id="outlined-basic" label="Email" variant="outlined" type='email' value={data.email} onChange={e => setData('email', e.target.value)} />
                                     {errors.email && <span><p className='text-red-500'>{errors.email}</p></span>}
-                                    <TextField id="outlined-basic" label="Password" variant="outlined" type='password' value={data.password} onChange={e => setData('password', e.target.value)} />
-                                    {errors.password && <span><p className='text-red-500'>{errors.password}</p></span>}
-                                    <TextField id="outlined-basic" label="Confirm Password" variant="outlined" type='password' value={data.password_confirmation} onChange={e => setData('password_confirmation', e.target.value)} />
+                                    {!editingUser && (
+                                        <>
+                                            <TextField id="outlined-basic" label="Password" variant="outlined" type='password' value={data.password} onChange={e => setData('password', e.target.value)} />
+                                            {errors.password && <span><p className='text-red-500'>{errors.password}</p></span>}
+                                            <TextField id="outlined-basic" label="Confirm Password" variant="outlined" type='password' value={data.password_confirmation} onChange={e => setData('password_confirmation', e.target.value)} />
+                                        </>
+                                    )}
                                 </Stack>
                                 <DialogActions className='mt-4'>
                                     <Button variant='outlined' onClick={handleClose}>Cancel</Button>
-                                    <Button variant='contained' type='submit'>Add</Button>
+                                    <Button variant='contained' type='submit'>{editingUser ? 'Save' : 'Add'}</Button>
                                 </DialogActions>
                             </form>
                         </DialogContent>
@@ -199,15 +268,36 @@ const UserManagement = () => {
                                 <TableCell>{item.role}</TableCell>
                                 <TableCell>
                                     <Tooltip title='Edit' arrow>
-                                        <IconButton aria-label="edit" size="large">
+                                        <IconButton aria-label="edit" size="large" onClick={() => handleClickOpen(item)}>
                                             <EditIcon color='primary' fontSize="inherit" />
                                         </IconButton>
                                     </Tooltip>
                                     <Tooltip title='Delete' arrow>
-                                        <IconButton aria-label="delete" size="large">
+                                        <IconButton aria-label="delete" size="large" onClick={openDeleteDialog}>
                                             <DeleteIcon color='primary' fontSize="inherit" />
                                         </IconButton>
                                     </Tooltip>
+                                    <Dialog
+                                        open={deleteOpen}
+                                        onClose={closeDeleteDialog}
+                                        aria-labelledby="alert-dialog-title"
+                                        aria-describedby="alert-dialog-description"
+                                    >
+                                        <DialogTitle id="alert-dialog-title">
+                                            Confirm Deletion
+                                        </DialogTitle>
+                                        <DialogContent>
+                                        <DialogContentText id="alert-dialog-description">
+                                            Are you sure you want to delete this user? This action cannot be undone.
+                                        </DialogContentText>
+                                        </DialogContent>
+                                        <DialogActions>
+                                        <Button variant='outlined' onClick={closeDeleteDialog}>Cancel</Button>
+                                        <Button variant='contained' onClick={() => deleteUser(item.id)} autoFocus>
+                                            Delete
+                                        </Button>
+                                        </DialogActions>
+                                    </Dialog>
                                 </TableCell>
                                 </TableRow>
                         ))}

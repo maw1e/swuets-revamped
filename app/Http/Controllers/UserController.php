@@ -30,11 +30,30 @@ class UserController extends Controller
         return redirect()->route('user_management')->with('success', ' User created successfully!');
     }
 
-    public function deleteUser() {
+    public function deleteUser($id) {
+        sleep(1);
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return redirect()->back()->with('success', 'User deleted successfully!');
 
     }
 
-    public function updateUser() {
+    public function updateUser(Request $request, $id) {
+        sleep(1);
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email',],
+        ]);
 
+        $user = User::findOrFail($id);
+
+        $user->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+        ]);
+
+        return redirect()->back()->with('success', 'User updated successfully!');
     }
 }

@@ -19,6 +19,8 @@ Route::middleware(['auth'])->group(function() {
     Route::inertia('/user_management', 'UserManagement')->name('user_management');
     Route::get('/user_management', [UserController::class, 'index'])->name('user_management');
     Route::post('/user_management', [UserController::class, 'createUser'])->name('user.create');
+    Route::delete('/user_management/${id}', [UserController::class, 'deleteUser'])->name('user.delete');
+    Route::put('/users_management/${id}', [UserController::class, 'updateUser'])->name('user.update');
 
     // Reports route
     Route::inertia('/reports', 'Reports')->name('reports');
