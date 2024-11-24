@@ -25,7 +25,7 @@ const Login = () => {
 
     return (
         <AppLayout title='Login'>
-            <div className='flex justify-center items-center bg-white h-screen'>
+            <div className='flex justify-center items-center h-screen'>
                 <Box>
                     <Container
                         sx={{

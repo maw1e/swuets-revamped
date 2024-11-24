@@ -2,31 +2,38 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SignupController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserMgmtController;
 use Illuminate\Support\Facades\Route;
 
 
 
 Route::middleware(['auth'])->group(function() {
+
     //Dashboard routes
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
 
     //Event Management routes
     Route::inertia('/event_management', 'EventManagement')->name('event_management');
 
-    // Users Management routes
+    // User Management routes
     Route::inertia('/user_management', 'UserManagement')->name('user_management');
-    Route::get('/user_management', [UserController::class, 'index'])->name('user_management');
-    Route::post('/user_management', [UserController::class, 'createUser'])->name('user.create');
-    Route::delete('/user_management/${id}', [UserController::class, 'deleteUser'])->name('user.delete');
-    Route::put('/users_management/${id}', [UserController::class, 'updateUser'])->name('user.update');
+    Route::get('/user_management', [UserMgmtController::class, 'index'])->name('user_management');
+    Route::post('/user_management', [UserMgmtController::class, 'createUser'])->name('user.create');
+    Route::delete('/user_management/${id}', [UserMgmtController::class, 'deleteUser'])->name('user.delete');
+    Route::put('/users_management/${id}', [UserMgmtController::class, 'updateUser'])->name('user.update');
 
-    // Reports route
+    // Reports routes
     Route::inertia('/reports', 'Reports')->name('reports');
 
-    // Event History
+    // Event History routes
     Route::inertia('/event_history', 'EventHistory')->name('event_history');
+
+    // Profile Routes
+    Route::inertia('/profile', 'Profile')->name('profile');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'updatePersonalInformation'])->name('profile.update');
 
     // Logout route
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');

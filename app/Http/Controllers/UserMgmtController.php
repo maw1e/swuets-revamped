@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class UserController extends Controller
+class UserMgmtController extends Controller
 {
     public function index () {
         $user = User::all();
@@ -24,8 +24,6 @@ class UserController extends Controller
         ]);
 
         User::create($fields);
-
-        // dd($request->session()->all()); // Dump the session data
 
         return redirect()->route('user_management')->with('success', ' User created successfully!');
     }

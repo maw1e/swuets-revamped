@@ -1,9 +1,11 @@
 import React from 'react'
+
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import EventIcon from '@mui/icons-material/Event';
 import ReportIcon from '@mui/icons-material/Assessment';
 import HistoryIcon from '@mui/icons-material/History';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -21,6 +23,7 @@ const menuItems = [
     { text: 'Event Management', icon: <EventIcon color='primary' />, route: 'event_management' },
     { text: 'Reports', icon: <ReportIcon color='primary' />, route: 'reports' },
     { text: 'Event History', icon: <HistoryIcon color='primary' />, route: 'event_history' },
+    { text: 'Profile', icon: <AccountBoxIcon color='primary' />, route: 'profile' },
   ];
 
 const MiniDrawerList = () => {

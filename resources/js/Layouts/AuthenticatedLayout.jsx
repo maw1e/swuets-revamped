@@ -6,12 +6,6 @@ const AuthenticatedLayout = ({children}) => {
     return (
         <>
             <MiniDrawer>
-                <header>
-                    {/* <AuthenticatedNavbar /> */}
-                </header>
-                    
-                
-
                 <main>
                     {children}
                 </main>
