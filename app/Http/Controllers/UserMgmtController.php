@@ -20,6 +20,7 @@ class UserMgmtController extends Controller
         $fields = $request->validate([
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users'],
+            'role' => ['required'],
             'password' => ['required', 'confirmed'],
         ]);
 
@@ -50,6 +51,7 @@ class UserMgmtController extends Controller
         $user->update([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
+            'role' => $request->input('role')
         ]);
 
         return redirect()->back()->with('success', 'User updated successfully!');

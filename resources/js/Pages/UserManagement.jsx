@@ -23,6 +23,10 @@ import {
     Paper,
     Tooltip,
     DialogContentText,
+    Select,
+    MenuItem,
+    InputLabel,
+    FormControl,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -32,18 +36,6 @@ import { styled } from '@mui/material/styles';
 import { useRoute } from 'ziggy-js';
 import { useForm } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
-
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-  }
-  
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -67,6 +59,16 @@ const UserManagement = () => {
     const [alertOpen, setAlertOpen] = useState(false);
     const [snackBarMessage, setSnackBarMessage] = useState('');
     const [editingUser, setEditingUser] = useState(null);
+    const [role, setRole] = useState(null);
+
+    const roles = {
+        admin: "Admin",
+        organizer: "Organizer"
+    };
+
+    const handleRole = (event) => {
+        setRole(event.target.value);
+    }
 
     const openDeleteDialog = () => {
         setDeleteOpen(true);
@@ -80,16 +82,16 @@ const UserManagement = () => {
         setOpen(true);
         setEditingUser(user);
         if (user) {
-            // Populate form with user data when editing
             setData({
                 name: user.name,
                 email: user.email,
+                role: user.role,
             });
         } else {
-            // Reset form data when adding a new user
             setData({
                 name: '',
                 email: '',
+                role: '',
                 password: '',
                 password_confirmation: '',
             });
@@ -121,6 +123,7 @@ const UserManagement = () => {
     const {data, setData, post, reset, delete: destroy, put, errors} = useForm({
         name: '',
         email: '',
+        role: '',
         password: '',
         password_confirmation: '',
     });
@@ -225,11 +228,25 @@ const UserManagement = () => {
                                     {errors.name && <span><p className='text-red-500'>{errors.name}</p></span>}
                                     <TextField id="outlined-basic" label="Email" variant="outlined" type='email' value={data.email} onChange={e => setData('email', e.target.value)} />
                                     {errors.email && <span><p className='text-red-500'>{errors.email}</p></span>}
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                                        <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={data.role}
+                                        label="Role"
+                                        onChange={e => setData('role', e.target.value)}
+                                        >
+                                        <MenuItem value={roles.admin}>Admin</MenuItem>
+                                        <MenuItem value={roles.organizer}>Organizer</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                     {!editingUser && (
                                         <>
                                             <TextField id="outlined-basic" label="Password" variant="outlined" type='password' value={data.password} onChange={e => setData('password', e.target.value)} />
                                             {errors.password && <span><p className='text-red-500'>{errors.password}</p></span>}
                                             <TextField id="outlined-basic" label="Confirm Password" variant="outlined" type='password' value={data.password_confirmation} onChange={e => setData('password_confirmation', e.target.value)} />
+                                            
                                         </>
                                     )}
                                 </Stack>
