@@ -41,9 +41,8 @@ const MiniDrawerList = () => {
         <>
             <List>
             {menuItems.map((item) => {
-                // Conditionally render "User Management" for admins only
                 if (item.admin && !isAdmin) {
-                    return null; // Don't render "User Management" if not an admin
+                    return null; 
                 }
                     return (
                     <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>

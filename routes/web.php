@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::middleware(['role:Admin'])->group(function() {
+Route::middleware(['auth'])->group(function() {
 
     //Dashboard routes
     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
@@ -18,10 +18,11 @@ Route::middleware(['role:Admin'])->group(function() {
     Route::inertia('/event_management', 'EventManagement')->name('event_management');
 
     // User Management routes
-    Route::get('/user_management', [UserMgmtController::class, 'index'])->name('user_management');
+    Route::inertia('/user_management', 'UserManagement')->name('user_management')->middleware('role:Admin');
+    Route::get('/user_management', [UserMgmtController::class, 'index'])->name('user_management')->middleware('role:Admin');
     Route::post('/user_management', [UserMgmtController::class, 'createUser'])->name('user.create');
-    Route::delete('/user_management/${id}', [UserMgmtController::class, 'deleteUser'])->name('user.delete');
-    Route::put('/users_management/${id}', [UserMgmtController::class, 'updateUser'])->name('user.update');
+    Route::delete('/user_management/${id}', [UserMgmtController::class, 'deleteUser'])->name('user.delete')->middleware('role:Admin');
+    Route::put('/users_management/${id}', [UserMgmtController::class, 'updateUser'])->name('user.update')->middleware('role:Admin');
 
     // Reports routes
     Route::inertia('/reports', 'Reports')->name('reports');
@@ -37,31 +38,6 @@ Route::middleware(['role:Admin'])->group(function() {
     // Logout route
     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 });
-
-// Route::middleware(['role:organizer'])->group(function() {
-
-//     //Dashboard routes
-//     Route::inertia('/dashboard', 'Dashboard')->name('dashboard');
-
-//     //Event Management routes
-//     Route::inertia('/event_management', 'EventManagement')->name('event_management');
-
-//     // Reports routes
-//     Route::inertia('/reports', 'Reports')->name('reports');
-
-//     // Event History routes
-//     Route::inertia('/event_history', 'EventHistory')->name('event_history');
-
-//     // Profile Routes
-//     Route::inertia('/profile', 'Profile')->name('profile');
-//     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
-//     Route::put('/profile', [ProfileController::class, 'updatePersonalInformation'])->name('profile.update');
-
-//     // Logout route
-//     Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
-// });
-
-
 
 
 
