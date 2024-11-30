@@ -10,10 +10,10 @@ use Inertia\Inertia;
 class ProfileController extends Controller
 {
     public function index() {
-        $user = Auth::user();
+        $profile = Auth::user();
 
         return Inertia::render('Profile', [
-            'user' => $user
+            'profile' => $profile
         ]);
     }
 

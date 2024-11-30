@@ -66,10 +66,7 @@ const UserManagement = () => {
         organizer: "Organizer"
     };
 
-    const handleRole = (event) => {
-        setRole(event.target.value);
-    }
-
+console.log(props)
     const openDeleteDialog = () => {
         setDeleteOpen(true);
     }
@@ -78,14 +75,14 @@ const UserManagement = () => {
         setDeleteOpen(false);
     }
 
-    const handleClickOpen = (user = null) => {
+    const handleClickOpen = (users = null) => {
         setOpen(true);
-        setEditingUser(user);
-        if (user) {
+        setEditingUser(users);
+        if (users) {
             setData({
-                name: user.name,
-                email: user.email,
-                role: user.role,
+                name: users.name,
+                email: users.email,
+                role: users.role_names,
             });
         } else {
             setData({
@@ -132,7 +129,7 @@ const UserManagement = () => {
         e.preventDefault();
 
         if(editingUser) {
-            put(route('user.update', editingUser.id), {
+            put(route('users.update', editingUser.id), {
                 method: 'put',
                 data,
                 onSuccess: () => {
@@ -147,7 +144,7 @@ const UserManagement = () => {
                 },
             });
         } else {
-            post(route('user.create'), {
+            post(route('users.create'), {
                 onSuccess: () => {
                     reset(); 
                     setAlertOpen(true);
@@ -164,7 +161,7 @@ const UserManagement = () => {
     };
 
     const deleteUser = (id) => {
-        destroy(route('user.delete', id), {
+        destroy(route('users.delete', id), {
             method: 'delete',
             onSuccess: () => {
                 setSnackBarMessage(message);
@@ -177,7 +174,7 @@ const UserManagement = () => {
         });
     };
 
-
+console.log(props.users)
     return (
         <>
             <AppLayout title='User Management'>
@@ -273,7 +270,7 @@ const UserManagement = () => {
                         </TableRow>
                         </TableHead>
                         <TableBody>
-                        {props.user.map((item) => (
+                        {props.users.map((item) => (
                                 <TableRow
                                 key={item.id}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -282,7 +279,7 @@ const UserManagement = () => {
                                     {item.name}
                                 </TableCell>
                                 <TableCell>{item.email}</TableCell>
-                                <TableCell>{item.role}</TableCell>
+                                <TableCell>{item.role_names}</TableCell>
                                 <TableCell>
                                     <Tooltip title='Edit' arrow>
                                         <IconButton aria-label="edit" size="large" onClick={() => handleClickOpen(item)}>

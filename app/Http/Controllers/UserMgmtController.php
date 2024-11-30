@@ -6,25 +6,35 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
+
 class UserMgmtController extends Controller
 {
     public function index () {
-        $user = User::all();
+        $users = User::with('roles')->get()->map(function ($user) {
+            $user->role_names = $user->roles->pluck('name')->join(', ');
+            return $user;
+        });
 
         return Inertia::render('UserManagement', [
-            'user' => $user
+            'users' => $users,
         ]);
     }
 
     public function createUser(Request $request) {
-        $fields = $request->validate([
+        $request->validate([
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users'],
-            'role' => ['required'],
             'password' => ['required', 'confirmed'],
         ]);
 
-        User::create($fields);
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ]);
+
+        $role = $request->input('role');
+        $user->assignRole($role);
 
         return redirect()->route('user_management')->with('success', ' User created successfully!');
     }
@@ -51,8 +61,11 @@ class UserMgmtController extends Controller
         $user->update([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
-            'role' => $request->input('role')
         ]);
+
+        $role = $request->input('role');
+        $user->assignRole($role);
+
 
         return redirect()->back()->with('success', 'User updated successfully!');
     }

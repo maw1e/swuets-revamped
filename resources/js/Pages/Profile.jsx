@@ -46,8 +46,8 @@ const Profile = () => {
     const { props } = usePage();
 
     const {data, setData, put,} = useForm({
-        name: props.user.name,
-        email: props.user.email,
+        name: props.profile.name,
+        email: props.profile.email,
     });
 
     const submit = (e) => {

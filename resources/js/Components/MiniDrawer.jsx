@@ -13,7 +13,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { Button } from '@mui/material';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { useRoute } from 'ziggy-js';
 import MiniDrawerList from './MiniDrawerList';
 

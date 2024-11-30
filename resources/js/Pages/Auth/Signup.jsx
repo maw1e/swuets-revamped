@@ -1,6 +1,6 @@
 import React from 'react'
 import DefaultLayout from '../../Layouts/DefaultLayout';
-import { Box, Container, TextField, Stack, Button } from '@mui/material';
+import { Box, Container, TextField, Stack, Button, InputLabel, MenuItem, FormControl, Select, } from '@mui/material';
 import { Link, useForm } from '@inertiajs/react';
 import { useRoute } from 'ziggy-js';
 import AppLayout from '../../Layouts/AppLayout';
@@ -9,10 +9,16 @@ import AppLayout from '../../Layouts/AppLayout';
 const Signup = () => {
     
     const route = useRoute();
+    
+    const roles = {
+        admin: 'Admin',
+        organizer: 'Organizer',
+    }
 
     const {data, setData, post, processing, errors} = useForm({
         name: '',
         email: '',
+        role: '',
         password: '',
         password_confirmation: '',
     })
@@ -47,6 +53,19 @@ const Signup = () => {
                                     <TextField id="outlined-basic" value={data.password} onChange={e => setData('password', e.target.value)} label="Password" type='password' variant="outlined" />
                                     {errors.password && <span className='text-red-500'>{errors.password}</span>}
                                     <TextField id="outlined-basic" value={data.password_confirmation} onChange={e => setData('password_confirmation', e.target.value)} label="Confirm Password" type='password' variant="outlined" />
+                                    <FormControl fullWidth>
+                                        <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                                        <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={data.role}
+                                        label="Role"
+                                        onChange={e => setData('role', e.target.value)}
+                                        >
+                                        <MenuItem value={roles.admin}>Admin</MenuItem>
+                                        <MenuItem value={roles.organizer}>Organizer</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                     <Button type='submit' variant='contained' size='large'>SIGNUP</Button>
                             </Stack>
                         </form>

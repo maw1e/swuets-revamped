@@ -4,6 +4,7 @@ import MiniDrawer from './MiniDrawer'
 
 
 const AuthenticatedNavbar = ({children}) => {
+
     return (
         <>
             <div>
