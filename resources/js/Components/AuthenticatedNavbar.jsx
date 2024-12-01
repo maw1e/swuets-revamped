@@ -1,25 +1,20 @@
-import React from 'react'
-import MiniDrawer from './MiniDrawer'
+import React from "react";
+import MiniDrawer from "./MiniDrawer";
 
-
-
-const AuthenticatedNavbar = ({children}) => {
-
+const AuthenticatedNavbar = ({ children }) => {
     return (
         <>
             <div>
                 <header>
                     <nav>
                         <MiniDrawer />
-                    </nav> 
+                    </nav>
                 </header>
             </div>
 
-            <main>
-                {children}
-            </main>
+            <main>{children}</main>
         </>
-    )
-}
+    );
+};
 
-export default AuthenticatedNavbar
+export default AuthenticatedNavbar;
