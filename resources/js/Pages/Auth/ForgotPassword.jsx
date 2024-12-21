@@ -3,6 +3,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import GuestLayout from "@/Layouts/GuestLayout";
 import { Head, useForm } from "@inertiajs/react";
+import { Button } from "@mui/material";
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -45,9 +46,14 @@ export default function ForgotPassword({ status }) {
                 <InputError message={errors.email} className="mt-2" />
 
                 <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        fullWidth
+                        disabled={processing}
+                    >
                         Email Password Reset Link
-                    </PrimaryButton>
+                    </Button>
                 </div>
             </form>
         </GuestLayout>
