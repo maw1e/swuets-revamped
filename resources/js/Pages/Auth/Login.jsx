@@ -97,6 +97,7 @@ export default function Login({ status, canResetPassword }) {
                         variant="contained"
                         fullWidth
                         disabled={processing}
+                        type="submit"
                     >
                         Login
                     </Button>

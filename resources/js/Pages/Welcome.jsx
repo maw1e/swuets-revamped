@@ -17,7 +17,7 @@ export default function Welcome({ auth }) {
                         </Link>
                     </div>
                     {/* Navigation links aligned to the right */}
-                    <nav className="-mx-3 flex space-x-4">
+                    <nav className="mx-3 flex space-x-4">
                         {auth.user ? (
                             <Link
                                 href={route("dashboard")}

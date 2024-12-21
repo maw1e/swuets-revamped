@@ -109,6 +109,7 @@ export default function Register() {
                     fullWidth
                     disabled={processing}
                     sx={{ mt: 4 }}
+                    type="submit"
                 >
                     Register
                 </Button>
