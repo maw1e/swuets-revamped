@@ -92,9 +92,22 @@ export default function Login({ status, canResetPassword }) {
                     )}
                 </div>
                 <div>
-                    <Button size="large" variant="contained" fullWidth>
+                    <Button
+                        size="large"
+                        variant="contained"
+                        fullWidth
+                        disabled={processing}
+                    >
                         Login
                     </Button>
+                </div>
+                <div className="mt-4 flex items-center justify-center">
+                    <Link
+                        href={route("register")}
+                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    >
+                        Don't have an account?
+                    </Link>
                 </div>
             </form>
         </GuestLayout>
