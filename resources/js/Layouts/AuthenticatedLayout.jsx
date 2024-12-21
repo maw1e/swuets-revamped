@@ -3,6 +3,7 @@ import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link, usePage } from "@inertiajs/react";
+import { Button } from "@mui/material";
 import { useState } from "react";
 
 export default function AuthenticatedLayout({ header, children }) {
@@ -12,14 +13,16 @@ export default function AuthenticatedLayout({ header, children }) {
         useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-white">
             <nav className="border-b border-gray-100 bg-white">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                <Link href={route("dashboard")}>
+                                    <h1 className="text-xl text-blue-500 font-bold">
+                                        SWUETS
+                                    </h1>
                                 </Link>
                             </div>
 
@@ -29,6 +32,12 @@ export default function AuthenticatedLayout({ header, children }) {
                                     active={route().current("dashboard")}
                                 >
                                     Dashboard
+                                </NavLink>
+                                <NavLink
+                                    href={route("event_management")}
+                                    active={route().current("event_management")}
+                                >
+                                    Event Management
                                 </NavLink>
                             </div>
                         </div>
